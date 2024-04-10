@@ -20,5 +20,5 @@ public class CycleTimes {
     @JsonProperty("waitingorders")
     private Integer waitingOrders;
 
-    private List<Order> orders;
+    private List<AppOrder> orders;
 }

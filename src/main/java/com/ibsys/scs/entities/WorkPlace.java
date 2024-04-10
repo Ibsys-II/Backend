@@ -8,8 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @Data
 @AllArgsConstructor
@@ -22,7 +20,8 @@ public class WorkPlace {
 
     private Integer period;
 
-    private Integer order;
+    @JsonProperty("order")
+    private Integer appOrder;
 
     private Integer batch;
 

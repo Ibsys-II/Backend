@@ -13,5 +13,5 @@ import java.util.List;
 @Builder
 public class FutureInwardStockMovement {
 
-    private List<Order> orders;
+    private List<AppOrder> orders;
 }

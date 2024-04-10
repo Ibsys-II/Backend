@@ -23,7 +23,8 @@ public class WaitingList {
 
     private Integer period;
 
-    private Integer order;
+    @JsonProperty("order")
+    private Integer appOrder;
 
     @JsonProperty("firstbatch")
     private Integer firstBatch;
