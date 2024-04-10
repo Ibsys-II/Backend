@@ -13,5 +13,5 @@ import java.util.List;
 @Builder
 public class CompletedOrders {
 
-    private List<Order> orders;
+    private List<AppOrder> orders;
 }
