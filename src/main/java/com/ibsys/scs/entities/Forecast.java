@@ -24,4 +24,5 @@ public class Forecast {
     private Integer p1;
     private Integer p2;
     private Integer p3;
+    private Integer period;
 }
