@@ -1,7 +1,5 @@
 package com.ibsys.scs.entities;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,9 +20,7 @@ public class Forecast {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
-    @JsonIgnore // Property wird im Json nicht auftauchen...
     private UUID id;
-    // Bedarf (p1, p2, p3)
     private Integer p1;
     private Integer p2;
     private Integer p3;
