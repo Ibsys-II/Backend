@@ -1,9 +1,6 @@
 package com.ibsys.scs.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,8 +18,13 @@ public class Forecast {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid")
     private UUID id;
+
     private Integer p1;
+
     private Integer p2;
+
     private Integer p3;
+
+    @Column(unique=true)
     private Integer period;
 }
