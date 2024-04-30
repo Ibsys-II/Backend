@@ -5,18 +5,23 @@ import com.ibsys.scs.entities.Article;
 
 public record ArticleDto(
         Double amount,
-
-        @JsonProperty("startamount")
+        String number,
+        String usedFor,
+        String description,
+        //@JsonProperty("startamount")
         Double startAmount,
         Double pct,
         Double price,
-        @JsonProperty("stockvalue")
+        //@JsonProperty("stockvalue")
         Double stockValue
 ) {
     public Article toArticle() {
         return Article.builder()
                 .id(null)
                 .amount(amount)
+                .number(number)
+                .usedFor(usedFor)
+                .description(description)
                 .startAmount(startAmount)
                 .pct(pct)
                 .price(price)

@@ -1,26 +1,32 @@
 package com.ibsys.scs.services;
 
-import com.ibsys.scs.entities.Article;
+import com.ibsys.scs.dto.WarehouseStockDto;
 import com.ibsys.scs.entities.WarehouseStock;
+import com.ibsys.scs.repositories.WarehouseStockRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class WarehouseStockService {
 
-    private final ArticleService articleService;
+    private WarehouseStockRepository warehouseStockRepository;
 
-    public WarehouseStock getWarehouseStock() {
-        var articles = articleService.findAllArticles();
+    public List<WarehouseStock> findWarehouseStocksByPeriod(final Integer period) {
+        return warehouseStockRepository.findWarehouseStocksByPeriod(period);
+    }
 
-        var amountList = articles.stream().map(Article::getAmount).toList();
+    public void createWarehouseStock(final WarehouseStockDto warehouseStockDto) {
+        var warehouseStock = warehouseStockDto.toWarehouseStock();
+        warehouseStockRepository.save(warehouseStock);
+    }
 
-        var totalStockValue = amountList.stream().reduce(0.0, Double::sum);
-
-        return WarehouseStock.builder()
-                .articles(articles)
-                .totalStockValue(totalStockValue)
-                .build();
+    public void createMultipleWarehouseStocks(final List<WarehouseStockDto> warehouseStockDtoList) {
+        var warehouseStockList = warehouseStockDtoList.stream()
+                .map(WarehouseStockDto::toWarehouseStock)
+                .toList();
+        warehouseStockRepository.saveAll(warehouseStockList);
     }
 }

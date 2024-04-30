@@ -21,15 +21,27 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    // TODO: Remove. Not Master data
     private Double amount;
 
-    @JsonProperty("startamount")
+    // Bezeichnung des Artikels
+    private String number;
+
+    private String description;
+
+    // Produkt bei dem der Artikel verwendet wird.
+    private String usedFor;
+
+    //@JsonProperty("startamount")
     private Double startAmount;
 
+    // TODO: What is this ??? Ask Robert
+    //  Remove if not master data
     private Double pct;
 
     private Double price;
 
-    @JsonProperty("stockvalue")
+    // TODO: Remove. Not Master data
+    //@JsonProperty("stockvalue")
     private Double stockValue;
 }

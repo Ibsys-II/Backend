@@ -6,6 +6,8 @@ import com.ibsys.scs.repositories.ArticleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -20,6 +22,15 @@ public class ArticleService {
 
     public Article findArticleById(final Integer id) {
         return articleRepository.findById(id).orElse(null);
+    }
+
+    public List<Article> findArticlesByNumber(final String[] numbers) {
+        List<Article> results = new ArrayList<>();
+        Arrays.stream(numbers).toList().forEach(number -> {
+            var article = articleRepository.findByNumber(number);
+            article.ifPresent(results::add);
+        });
+        return results;
     }
 
     public void createArticle(final ArticleDto articleDto) {

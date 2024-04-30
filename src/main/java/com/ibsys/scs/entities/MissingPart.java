@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MissingPart {
 
-
     @Id
     private Integer id;
 }

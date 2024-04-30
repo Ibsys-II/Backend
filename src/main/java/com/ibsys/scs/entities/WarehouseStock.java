@@ -1,22 +1,38 @@
 package com.ibsys.scs.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-// Lager
+// Lagerarticle
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class WarehouseStock {
 
-    private List<Article> articles;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-    @JsonProperty("totalstockvalue")
-    private Double totalStockValue;
+    private Double amount;
+
+    // TODO: What is this ??? Ask Robert
+    //  Remove if not master data
+    private Double pct;
+
+    private Double price;
+
+    //@JsonProperty("stockvalue")
+    private Double stockValue;
+
+    private Integer period;
+
+    private Integer articleId;
 }

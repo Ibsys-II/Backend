@@ -1,14 +1,13 @@
 package com.ibsys.scs.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "work_place")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,9 +15,31 @@ import lombok.NoArgsConstructor;
 public class WorkPlace {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    private Integer idFromXml;
+
     private Integer period;
+
+    //@JsonProperty("setupevents")
+    private Integer setupEvents;
+
+    //@JsonProperty("idletime")
+    private Integer idleTime;
+
+    //@JsonProperty("wageidletimecosts")
+    private Double wageIdleTimeCosts;
+
+    //@JsonProperty("wagecosts")
+    private Double wageCosts;
+
+    //@JsonProperty("machineidletimecosts")
+    private Double machineIdleTimeCosts;
+
+    // Needed for other wrapper classes
+    //@JsonProperty("timeneed")
+    private Integer timeNeed;
 
     @JsonProperty("order")
     private Integer appOrder;
@@ -29,24 +50,15 @@ public class WorkPlace {
 
     private Integer amount;
 
-    @JsonProperty("setupevents")
-    private Integer setupEvents;
+    private Integer number;
 
-    @JsonProperty("idletime")
-    private Integer idleTime;
+    private Boolean isMissingPart;
 
-    @JsonProperty("wageidletimecosts")
-    private Double wageIdleTimeCosts;
+    private Boolean isIdleTimeCosts;
 
-    @JsonProperty("wagecosts")
-    private Double wageCosts;
+    private Boolean isWaitingListWorkStations;
 
-    @JsonProperty("machineidletimecosts")
-    private Double machineIdleTimeCosts;
+    private Boolean isWaitingListStock;
 
-    // Needed for other wrapper classes
-    @JsonProperty("timeneed")
-    private Integer timeNeed;
-
-    private Integer missingPartFk;
+    private Boolean isOrdersInWork;
 }

@@ -6,10 +6,25 @@ public abstract class ApiRoutes {
     public static final String FORECAST = "/forecast";
 
     // Lagerbestände
-    public static final String WAREHOUSE_STOCK = "/warehousestock";
+    public static final String WAREHOUSE_STOCK = "/warehousestocks";
 
-    // Artikeln
+    // Articles
     public static final String ARTICLES = "/articles";
+
+    // Orders
+    public static final String ORDERS = "/orders";
+
+    // Work places
+    public static final String WORK_PLACES = "/workplaces";
+
+    // Waiting lists
+    public static final String WAITING_LISTS = "/waitinglists";
+
+    // Batches
+    public static final String BATCHES = "/batches";
+
+
+
 
     private ApiRoutes() {}
 }

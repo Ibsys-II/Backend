@@ -38,6 +38,6 @@ public class WaitingList {
 
     private Integer timeNeed;
 
-    private Integer workPlaceFk;
+    private Integer workPlaceId;
 
 }
