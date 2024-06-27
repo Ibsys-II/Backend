@@ -1,7 +1,9 @@
 package com.ibsys.scs.config;
 
 import com.ibsys.scs.entities.Article;
+import com.ibsys.scs.entities.neu.SaleAndProductionProgram;
 import com.ibsys.scs.repositories.ArticleRepository;
+import com.ibsys.scs.repositories.neu.SaleAndProductionProgramRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +14,38 @@ import java.util.List;
 public class DatabaseConfiguration {
 
     @Bean
-    CommandLineRunner commandLineRunner(final ArticleRepository articleRepository) {
+    CommandLineRunner commandLineRunner(
+            final ArticleRepository articleRepository,
+            final SaleAndProductionProgramRepository saleAndProductionProgramRepository
+            ) {
         return args -> {
+            // Sale and production program
+            var saleAndProductionProgram = List.of(
+                    SaleAndProductionProgram.builder()
+                            .pN(0)
+                            .pNPlusOne(0)
+                            .pNPlusTwo(0)
+                            .pNPlusThree(0)
+                            .article("P1")
+                            .build(),
+                    SaleAndProductionProgram.builder()
+                            .pN(0)
+                            .pNPlusOne(0)
+                            .pNPlusTwo(0)
+                            .pNPlusThree(0)
+                            .article("P2")
+                            .build(),
+                    SaleAndProductionProgram.builder()
+                            .pN(0)
+                            .pNPlusOne(0)
+                            .pNPlusTwo(0)
+                            .pNPlusThree(0)
+                            .article("P3")
+                            .build()
+
+            );
+
+
             var articles = List.of(
                     Article.builder()
                             .number("1P")
@@ -429,6 +461,8 @@ public class DatabaseConfiguration {
                             .price(0.15)
                             .build()
             );
+
+            saleAndProductionProgramRepository.saveAll(saleAndProductionProgram);
 
             articleRepository.saveAll(articles);
         };

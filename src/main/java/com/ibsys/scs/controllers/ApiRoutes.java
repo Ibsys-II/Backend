@@ -25,6 +25,12 @@ public abstract class ApiRoutes {
 
 
 
+    // New Paths
+
+    public static final String SALE_AND_PRODUCTION_PROGRAM = "sale-and-production-program";
+
+
+
 
     private ApiRoutes() {}
 }
