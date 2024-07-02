@@ -1,6 +1,5 @@
 package com.ibsys.scs.services.neu;
 
-import com.ibsys.scs.dto.neu.SaleAndProductionProgramDto;
 import com.ibsys.scs.entities.neu.SaleAndProductionProgram;
 import com.ibsys.scs.repositories.neu.SaleAndProductionProgramRepository;
 import lombok.AllArgsConstructor;
@@ -13,6 +12,7 @@ import java.util.List;
 public class SaleAndProductionProgramService {
 
     private final SaleAndProductionProgramRepository saleAndProductionProgramRepository;
+    private final ProductionOrderService productionOrderService;
 
     public List<SaleAndProductionProgram> findAll() {
         return saleAndProductionProgramRepository.findAll();
@@ -20,6 +20,6 @@ public class SaleAndProductionProgramService {
 
     public void update(final List<SaleAndProductionProgram> saleAndProductionProgramList) {
         saleAndProductionProgramRepository.saveAll(saleAndProductionProgramList);
+        productionOrderService.updateProductionOrderOfAllArticles();
     }
-
 }

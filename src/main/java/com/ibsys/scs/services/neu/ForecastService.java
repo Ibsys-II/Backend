@@ -1,8 +1,8 @@
-package com.ibsys.scs.services;
+package com.ibsys.scs.services.neu;
 
-import com.ibsys.scs.dto.ForecastDto;
-import com.ibsys.scs.entities.Forecast;
-import com.ibsys.scs.repositories.ForecastRepository;
+import com.ibsys.scs.dto.neu.ForecastDto;
+import com.ibsys.scs.entities.neu.Forecast;
+import com.ibsys.scs.repositories.neu.ForecastRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

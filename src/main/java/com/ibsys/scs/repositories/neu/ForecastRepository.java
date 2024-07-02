@@ -1,6 +1,6 @@
-package com.ibsys.scs.repositories;
+package com.ibsys.scs.repositories.neu;
 
-import com.ibsys.scs.entities.Forecast;
+import com.ibsys.scs.entities.neu.Forecast;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

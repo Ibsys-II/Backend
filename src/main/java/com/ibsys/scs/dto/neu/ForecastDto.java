@@ -1,6 +1,6 @@
-package com.ibsys.scs.dto;
+package com.ibsys.scs.dto.neu;
 
-import com.ibsys.scs.entities.Forecast;
+import com.ibsys.scs.entities.neu.Forecast;
 
 public record ForecastDto(
         Integer p1,

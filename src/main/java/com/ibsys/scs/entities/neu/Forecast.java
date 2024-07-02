@@ -1,4 +1,4 @@
-package com.ibsys.scs.entities;
+package com.ibsys.scs.entities.neu;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,6 +25,6 @@ public class Forecast {
 
     private Integer p3;
 
-    @Column(unique=true)
+    //@Column(unique=true)
     private Integer period;
 }

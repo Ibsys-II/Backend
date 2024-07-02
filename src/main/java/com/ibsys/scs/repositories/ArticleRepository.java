@@ -1,10 +1,9 @@
 package com.ibsys.scs.repositories;
 
-import com.ibsys.scs.entities.Article;
+import com.ibsys.scs.entities.neu.Article;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository

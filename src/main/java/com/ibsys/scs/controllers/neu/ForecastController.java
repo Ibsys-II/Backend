@@ -1,8 +1,9 @@
-package com.ibsys.scs.controllers;
+package com.ibsys.scs.controllers.neu;
 
-import com.ibsys.scs.dto.ForecastDto;
-import com.ibsys.scs.entities.Forecast;
-import com.ibsys.scs.services.ForecastService;
+import com.ibsys.scs.controllers.ApiRoutes;
+import com.ibsys.scs.dto.neu.ForecastDto;
+import com.ibsys.scs.entities.neu.Forecast;
+import com.ibsys.scs.services.neu.ForecastService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

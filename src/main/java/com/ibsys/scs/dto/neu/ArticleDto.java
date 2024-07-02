@@ -1,31 +1,33 @@
-package com.ibsys.scs.dto;
+package com.ibsys.scs.dto.neu;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ibsys.scs.entities.Article;
+import com.ibsys.scs.entities.neu.Article;
 
 public record ArticleDto(
+        String id,
         Double amount,
         String number,
         String usedFor,
         String description,
-        //@JsonProperty("startamount")
+        @JsonProperty("startamount")
         Double startAmount,
-        Double pct,
-        Double price,
-        //@JsonProperty("stockvalue")
-        Double stockValue
+        String pct,
+        String price,
+        @JsonProperty("stockvalue")
+        String stockValue,
+        Integer period
 ) {
     public Article toArticle() {
         return Article.builder()
-                .id(null)
+                .id(Integer.parseInt(id))
                 .amount(amount)
                 .number(number)
                 .usedFor(usedFor)
                 .description(description)
                 .startAmount(startAmount)
-                .pct(pct)
-                .price(price)
-                .stockValue(stockValue)
+                .pct(Double.parseDouble(pct))
+                .price(Double.parseDouble(price))
+                .stockValue(Double.parseDouble(stockValue))
                 .build();
     }
 }

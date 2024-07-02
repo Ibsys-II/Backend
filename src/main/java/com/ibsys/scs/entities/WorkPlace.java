@@ -22,23 +22,23 @@ public class WorkPlace {
 
     private Integer period;
 
-    //@JsonProperty("setupevents")
+    @JsonProperty("setupevents")
     private Integer setupEvents;
 
-    //@JsonProperty("idletime")
+    @JsonProperty("idletime")
     private Integer idleTime;
 
-    //@JsonProperty("wageidletimecosts")
+    @JsonProperty("wageidletimecosts")
     private Double wageIdleTimeCosts;
 
-    //@JsonProperty("wagecosts")
+    @JsonProperty("wagecosts")
     private Double wageCosts;
 
-    //@JsonProperty("machineidletimecosts")
+    @JsonProperty("machineidletimecosts")
     private Double machineIdleTimeCosts;
 
     // Needed for other wrapper classes
-    //@JsonProperty("timeneed")
+    @JsonProperty("timeneed")
     private Integer timeNeed;
 
     @JsonProperty("order")

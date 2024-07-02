@@ -1,7 +1,7 @@
 package com.ibsys.scs.controllers;
 
-import com.ibsys.scs.dto.ArticleDto;
-import com.ibsys.scs.entities.Article;
+import com.ibsys.scs.dto.neu.ArticleDto;
+import com.ibsys.scs.entities.neu.Article;
 import com.ibsys.scs.services.ArticleService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

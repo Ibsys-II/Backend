@@ -26,10 +26,13 @@ public abstract class ApiRoutes {
 
 
     // New Paths
-
     public static final String SALE_AND_PRODUCTION_PROGRAM = "sale-and-production-program";
+    public static final String PRODUCTION_ORDERS = "production-orders";
 
-
+    public static final String IMPORT = "import";
+    public static final String CAPACITY_PLAN = "capacity-plan";
+    public static final String CAPACITY_PLAN_SUM_UP = "capacity-plan-sum-up";
+    public static final String DB_CONFIG = "db-config";
 
 
     private ApiRoutes() {}
