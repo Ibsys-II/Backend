@@ -74,7 +74,7 @@ public class ProductionOrderService {
             productionOrder.setPlannedSafetyStock((saleAndProductionProgramQuantity - sum1));
         }
         if (Objects.equals(productionOrder.getArticle(), StuecklistenGroup.P3)) {
-            var saleAndProductionProgramP3 = saleAndProductionProgramRepository.findByArticle(StuecklistenGroup.P1);
+            var saleAndProductionProgramP3 = saleAndProductionProgramRepository.findByArticle(StuecklistenGroup.P3);
             var saleAndProductionProgramQuantity = saleAndProductionProgramP3.isEmpty() ? 0 : saleAndProductionProgramP3.get().getPN();
 
             productionOrder.setPlannedSafetyStock((saleAndProductionProgramQuantity - sum1));
