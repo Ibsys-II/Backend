@@ -51,19 +51,45 @@ public class ProductionOrderService {
     private ProductionOrder sumUpProductionOrder(ProductionOrder productionOrder) {
         var saleOrder = productionOrder.getSaleOrder() == null ? 0 : productionOrder.getSaleOrder();
         var waitingQueue = productionOrder.getWaitingQueue() == null ? 0 : productionOrder.getWaitingQueue();
-        var plannedSafetyStock = productionOrder.getPlannedSafetyStock() == null ? 0 : productionOrder.getPlannedSafetyStock();
         var warehousePreviousPeriod = productionOrder.getWarehousePreviousPeriod() == null ? 0 : productionOrder.getWarehousePreviousPeriod();
         var ordersInWaitingQueue = productionOrder.getOrdersInWaitingQueue() == null ? 0 : productionOrder.getOrdersInWaitingQueue();
         var workInProgress = productionOrder.getWorkInProgress() == null ? 0 : productionOrder.getWorkInProgress();
 
-        productionOrder.setProductionOrder(
-                saleOrder +
-                        waitingQueue +
-                        plannedSafetyStock -
-                        warehousePreviousPeriod -
-                        ordersInWaitingQueue -
-                        workInProgress
-        );
+        var sum1 = saleOrder +
+                waitingQueue -
+                warehousePreviousPeriod -
+                ordersInWaitingQueue -
+                workInProgress;
+
+        if (Objects.equals(productionOrder.getArticle(), StuecklistenGroup.P1)) {
+            var saleAndProductionProgramP1 = saleAndProductionProgramRepository.findByArticle(StuecklistenGroup.P1);
+            var saleAndProductionProgramQuantity = saleAndProductionProgramP1.isEmpty() ? 0 : saleAndProductionProgramP1.get().getPN();
+
+            productionOrder.setPlannedSafetyStock((saleAndProductionProgramQuantity - sum1));
+        }
+        if (Objects.equals(productionOrder.getArticle(), StuecklistenGroup.P2)) {
+            var saleAndProductionProgramP2 = saleAndProductionProgramRepository.findByArticle(StuecklistenGroup.P2);
+            var saleAndProductionProgramQuantity = saleAndProductionProgramP2.isEmpty() ? 0 : saleAndProductionProgramP2.get().getPN();
+
+            productionOrder.setPlannedSafetyStock((saleAndProductionProgramQuantity - sum1));
+        }
+        if (Objects.equals(productionOrder.getArticle(), StuecklistenGroup.P3)) {
+            var saleAndProductionProgramP3 = saleAndProductionProgramRepository.findByArticle(StuecklistenGroup.P1);
+            var saleAndProductionProgramQuantity = saleAndProductionProgramP3.isEmpty() ? 0 : saleAndProductionProgramP3.get().getPN();
+
+            productionOrder.setPlannedSafetyStock((saleAndProductionProgramQuantity - sum1));
+        }
+
+        var plannedSafetyStock = productionOrder.getPlannedSafetyStock() == null ? 0 : productionOrder.getPlannedSafetyStock();
+
+        var sum = saleOrder +
+                waitingQueue +
+                plannedSafetyStock -
+                warehousePreviousPeriod -
+                ordersInWaitingQueue -
+                workInProgress;
+
+        productionOrder.setProductionOrder(sum);
         return productionOrder;
     }
 
