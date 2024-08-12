@@ -20,7 +20,7 @@ public class Article {
     private UUID uuid;
 
     private Integer id;
-    private Double amount;
+    private Integer amount;
     //@JsonProperty("startamount")
     private Double startAmount;
     private Double pct;

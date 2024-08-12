@@ -33,6 +33,7 @@ public abstract class ApiRoutes {
     public static final String CAPACITY_PLAN = "capacity-plan";
     public static final String CAPACITY_PLAN_SUM_UP = "capacity-plan-sum-up";
     public static final String DB_CONFIG = "db-config";
+    public static final String MATERIAL_PLAN = "material-plan";
 
 
     private ApiRoutes() {}

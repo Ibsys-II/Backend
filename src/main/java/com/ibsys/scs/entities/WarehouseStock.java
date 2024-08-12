@@ -21,7 +21,7 @@ public class WarehouseStock {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private Double amount;
+    private Integer amount;
 
     // TODO: What is this ??? Ask Robert
     //  Remove if not master data

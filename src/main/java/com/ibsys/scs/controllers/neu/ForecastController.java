@@ -26,4 +26,9 @@ public class ForecastController {
     public List<Forecast> findAllForecast() {
         return forecastService.findAllForecast();
     }
+
+    @GetMapping("/findone")
+    public Forecast getForecast() {
+        return forecastService.getForecast();
+    }
 }

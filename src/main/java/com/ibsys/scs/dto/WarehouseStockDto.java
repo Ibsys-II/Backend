@@ -3,7 +3,7 @@ package com.ibsys.scs.dto;
 import com.ibsys.scs.entities.WarehouseStock;
 
 public record WarehouseStockDto(
-        Double amount,
+        Integer amount,
 
         Double pct,
 

@@ -22,4 +22,12 @@ public class ForecastService {
     public List<Forecast> findAllForecast() {
         return forecastRepository.findAll();
     }
+
+    public Forecast getForecast() {
+        var item = forecastRepository.findAll();
+
+        if (item.isEmpty()) return null;
+
+        return item.get(0);
+    }
 }

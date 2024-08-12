@@ -30,6 +30,7 @@ public class DbConfigController {
     private final WarehouseStockRepository warehouseStockRepository;
     private final AppOrderRepository appOrderRepository;
     private final BatchRepository batchRepository;
+    private final MaterialPlanRepository materialPlanRepository;
 
     @GetMapping("/clear-db")
     void clearDb() {
@@ -47,5 +48,6 @@ public class DbConfigController {
         warehouseStockRepository.deleteAll();
         appOrderRepository.deleteAll();
         batchRepository.deleteAll();
+        materialPlanRepository.deleteAll();
     }
 }

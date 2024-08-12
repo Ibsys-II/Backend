@@ -26,6 +26,7 @@ public class ProductionOrderService {
 
     private final SaleAndProductionProgramRepository saleAndProductionProgramRepository;
     private final ForecastRepository forecastRepository;
+    private final MaterialPlanRepository materialPlanRepository;
 
     public List<ProductionOrder> findAll() {
         return productionOrderRepository.findAll();
@@ -325,6 +326,7 @@ public class ProductionOrderService {
         updateQuantitiesOfCapacityPlan();
         updateAmountOfWorkingPlacesInCapacityPlan();
         updateCapacityPlanSumUpTable();
+        //updateMaterialPlan();
     }
 
     @Transactional
@@ -553,5 +555,43 @@ public class ProductionOrderService {
                 .toList();
 
         capacityPlanSumUpRepository.saveAll(capacityPlanSumUpListToUpdate);
+    }
+
+    void updateMaterialPlan() {
+        var materialPlanList = materialPlanRepository.findAll();
+        var saleAndProductionProgramP1 = saleAndProductionProgramRepository.findByArticle(StuecklistenGroup.P1);
+        var saleAndProductionProgramP2 = saleAndProductionProgramRepository.findByArticle(StuecklistenGroup.P2);
+        var saleAndProductionProgramP3 = saleAndProductionProgramRepository.findByArticle(StuecklistenGroup.P3);
+
+        var materialPlanSumUpListToUpdate = materialPlanList.stream()
+                .map(c -> {
+                    c.setInitialStockInPeriodN(c.getDiscountQuantity());
+                    c.setGrossRequirementBasedOnProductionProgramN(
+                            (saleAndProductionProgramP1.isEmpty() ? 0 : saleAndProductionProgramP1.get().getPN()) * c.getUsedInP1() +
+                                    (saleAndProductionProgramP2.isEmpty() ? 0 : saleAndProductionProgramP2.get().getPN()) * c.getUsedInP2() +
+                                    (saleAndProductionProgramP3.isEmpty() ? 0 : saleAndProductionProgramP3.get().getPN()) * c.getUsedInP3()
+                    );
+                    c.setGrossRequirementBasedOnProductionProgramNPlus1(
+                            (saleAndProductionProgramP1.isEmpty() ? 0 : saleAndProductionProgramP1.get().getPNPlusOne()) * c.getUsedInP1() +
+                                    (saleAndProductionProgramP2.isEmpty() ? 0 : saleAndProductionProgramP2.get().getPNPlusOne()) * c.getUsedInP2() +
+                                    (saleAndProductionProgramP3.isEmpty() ? 0 : saleAndProductionProgramP3.get().getPNPlusOne()) * c.getUsedInP3()
+                    );
+                    c.setGrossRequirementBasedOnProductionProgramNPlus2(
+                            (saleAndProductionProgramP1.isEmpty() ? 0 : saleAndProductionProgramP1.get().getPNPlusTwo()) * c.getUsedInP1() +
+                                    (saleAndProductionProgramP2.isEmpty() ? 0 : saleAndProductionProgramP2.get().getPNPlusTwo()) * c.getUsedInP2() +
+                                    (saleAndProductionProgramP3.isEmpty() ? 0 : saleAndProductionProgramP3.get().getPNPlusTwo()) * c.getUsedInP3()
+                    );
+                    c.setGrossRequirementBasedOnProductionProgramNPlus3(
+                            (saleAndProductionProgramP1.isEmpty() ? 0 : saleAndProductionProgramP1.get().getPNPlusThree()) * c.getUsedInP1() +
+                                    (saleAndProductionProgramP2.isEmpty() ? 0 : saleAndProductionProgramP2.get().getPNPlusThree()) * c.getUsedInP2() +
+                                    (saleAndProductionProgramP3.isEmpty() ? 0 : saleAndProductionProgramP3.get().getPNPlusThree()) * c.getUsedInP3()
+                    );
+                    c.setQuantity(0);
+                    c.setOrderType("N");
+                    return c;
+                })
+                .toList();
+
+        materialPlanRepository.saveAll(materialPlanSumUpListToUpdate);
     }
 }

@@ -1,8 +1,10 @@
 package com.ibsys.scs.services.neu;
 
 import com.ibsys.scs.dto.neu.ArticleDto;
+import com.ibsys.scs.entities.WarehouseStock;
 import com.ibsys.scs.entities.neu.*;
 import com.ibsys.scs.repositories.ArticleRepository;
+import com.ibsys.scs.repositories.WarehouseStockRepository;
 import com.ibsys.scs.repositories.neu.*;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
@@ -28,6 +30,8 @@ public class ImportService {
     private final FutureInwardStockmovementRepository futureInwardStockmovementRepository;
     //private final DispositionEigenfertigungRepository dispositionEigenfertigungRepository;
     private final ProductionOrderRepository productionOrderRepository;
+    private final WarehouseStockRepository warehouseStockRepository;
+    private final MaterialPlanRepository materialPlanRepository;
 
     // private final DispositionEigenfertigungService dispositionEigenfertigungService;
     private ProductionOrderService productionOrderService;
@@ -59,13 +63,17 @@ public class ImportService {
 
         importProductionOrder();
 
+        importWarehouseStock(importData);
+
         productionOrderService.updateProductionOrderOfAllArticles();
+
+        updateMaterialPlan();
     }
 
     @Transactional
     public void importForecast(Forecast forecast) {
         forecast.setId(UUID.randomUUID());
-        forecastRepository.saveAndFlush(forecast);
+        forecastRepository.save(forecast);
     }
 
     @Transactional
@@ -73,7 +81,7 @@ public class ImportService {
         importData.getWaitinglistworkstations().forEach(
                 workplaceDTO -> {
                     log.debug(workplaceDTO.toString());
-                    WorkPlace workplace = workplaceRepository.saveAndFlush(workplaceDTO.toWorkPlace());
+                    WorkPlace workplace = workplaceRepository.save(workplaceDTO.toWorkPlace());
                     if(workplaceDTO.getWaitinglist() == null) {
                         return;
                     }
@@ -83,7 +91,7 @@ public class ImportService {
                                 return waitingListDTO.toWaitinglistWorkplace();
                             })
                             .toList();
-                    waitinglistWorkplaceRepository.saveAllAndFlush(waitingListWorkplace);
+                    waitinglistWorkplaceRepository.saveAll(waitingListWorkplace);
                 }
         );
     }
@@ -100,12 +108,12 @@ public class ImportService {
                                                 )
                                         )
                 );
-        waitingliststockWaitlinglistRepository.saveAllAndFlush(waitinglists);
+        waitingliststockWaitlinglistRepository.saveAll(waitinglists);
     }
 
     @Transactional
     public void importOrdersInWorkWorkplace(ImportData importData) {
-        ordersInWorkWorkplaceRepository.saveAllAndFlush(importData.getOrdersinwork().stream()
+        ordersInWorkWorkplaceRepository.saveAll(importData.getOrdersinwork().stream()
                 .map(OrdersInWorkWorkplaceDTO::toOrdersInWorkWorkplace)
                 .toList());
     }
@@ -132,6 +140,34 @@ public class ImportService {
             p.setWorkInProgress(workInProgress);
         });
         productionOrderRepository.saveAll(productionOrderList);
+    }
+
+    @Transactional
+    public void importWarehouseStock(final ImportData importData) {
+        warehouseStockRepository.deleteAll();
+        importData.getWarehousestock().getArticle().forEach(a -> {
+            WarehouseStock warehouseStock = WarehouseStock.builder()
+                    .id(Integer.parseInt(a.id()))
+                    .amount(a.amount())
+                    .pct(Double.parseDouble(a.pct()))
+                    .price(Double.parseDouble(a.price()))
+                    .stockValue(Double.parseDouble(a.stockValue()))
+                    .articleId(Integer.parseInt(a.id()))
+                   .build();
+            warehouseStockRepository.save(warehouseStock);
+        });
+    }
+
+    //@Transactional
+    public void updateMaterialPlan() {
+        var allMaterialPlans = materialPlanRepository.findAll();
+        allMaterialPlans.forEach(m -> {
+            var warehouseStock = warehouseStockRepository.findByArticleId(m.getArticleNumber());
+            warehouseStock.ifPresent(stock -> {
+                m.setInitialStockInPeriodN(stock.getAmount());
+                materialPlanRepository.save(m);
+            });
+        });
     }
 
     @Transactional
@@ -219,13 +255,13 @@ public class ImportService {
             );
         }
 
-        purchasePartDispositionRepository.saveAllAndFlush(purchasePartDispositions);
-        articleRepository.saveAllAndFlush(articles);
+        purchasePartDispositionRepository.saveAll(purchasePartDispositions);
+        articleRepository.saveAll(articles);
         productionOrderRepository.saveAll(productionOrderList);
     }
 
     public void importWaitinglist(List<WaitingListWorkPlace> waitinglistWorkplace) {
-        waitinglistWorkplaceRepository.saveAllAndFlush(waitinglistWorkplace);
+        waitinglistWorkplaceRepository.saveAll(waitinglistWorkplace);
     }
 
     @Transactional
@@ -237,6 +273,6 @@ public class ImportService {
                 .stream()
                 .toList();
 
-        futureInwardStockmovementRepository.saveAllAndFlush(futureInwardStockmovements);
+        futureInwardStockmovementRepository.saveAll(futureInwardStockmovements);
     }
 }

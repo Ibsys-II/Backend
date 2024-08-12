@@ -5,7 +5,7 @@ import com.ibsys.scs.entities.neu.Article;
 
 public record ArticleDto(
         String id,
-        Double amount,
+        Integer amount,
         String number,
         String usedFor,
         String description,
